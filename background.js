@@ -57,42 +57,22 @@ chrome.runtime.onInstalled.addListener(() => {
     title: "המר לעברית",
     contexts: ["selection"]
   });
-  console.log("תפריט קליק ימני נוצר בהצלחה");
 });
 
 // טיפול בלחיצה על תפריט הקליק הימני
 chrome.contextMenus.onClicked.addListener((info, tab) => {
   if (info.menuItemId === "convertToHebrew") {
-    console.log("נלחץ תפריט 'המר לעברית'");
-    
-    chrome.tabs.sendMessage(tab.id, { action: "convertText" }, (response) => {
-      if (chrome.runtime.lastError) {
-        console.error("שגיאה בשליחת הודעה:", chrome.runtime.lastError);
-      } else {
-        console.log("התקבלה תשובה:", response);
-      }
-    });
+    chrome.tabs.sendMessage(tab.id, { action: "convertText" });
   }
 });
 
 // טיפול בקיצור מקלדת
 chrome.commands.onCommand.addListener((command) => {
   if (command === "convert-text") {
-    console.log("הופעל קיצור מקלדת:", command);
-    
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       if (tabs && tabs[0]) {
-        chrome.tabs.sendMessage(tabs[0].id, { action: "convertText" }, (response) => {
-          if (chrome.runtime.lastError) {
-            console.error("שגיאה בשליחת הודעה:", chrome.runtime.lastError);
-          } else {
-            console.log("התקבלה תשובה:", response);
-          }
-        });
+        chrome.tabs.sendMessage(tabs[0].id, { action: "convertText" });
       }
     });
   }
-});
-
-// הודעת אתחול
-console.log("background script נטען בהצלחה"); 
+}); 

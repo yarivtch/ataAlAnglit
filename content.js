@@ -83,72 +83,67 @@ function replaceTextInEditableElement(convertedText) {
 
 // פונקציה ראשית להחלפת הטקסט המסומן
 function replaceSelectedText() {
-  console.log("פונקציית replaceSelectedText הופעלה");
+  // console.log("פונקציית replaceSelectedText הופעלה");
   
   const selection = window.getSelection();
   if (!selection || selection.toString().length === 0) {
-    console.log("אין טקסט מסומן");
+    // console.log("אין טקסט מסומן");
     return;
   }
   
   const selectedText = selection.toString();
-  console.log("טקסט מסומן:", selectedText);
+  // console.log("טקסט מסומן:", selectedText);
   
   const convertedText = convertEnglishToHebrew(selectedText);
-  console.log("טקסט מומר:", convertedText);
+  // console.log("טקסט מומר:", convertedText);
   
-  // בדיקה אם הפוקוס נמצא בשדה קלט
   const activeElement = document.activeElement;
   const isInput = activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA';
   const isEditable = activeElement.isContentEditable || activeElement.contentEditable === 'true';
   
-  console.log("אלמנט פעיל:", activeElement.tagName);
-  console.log("האם שדה קלט:", isInput);
-  console.log("האם אלמנט עריכה:", isEditable);
+  // console.log("אלמנט פעיל:", activeElement.tagName);
+  // console.log("האם שדה קלט:", isInput);
+  // console.log("האם אלמנט עריכה:", isEditable);
   
   try {
     if (isInput) {
       replaceTextInInputField(activeElement, convertedText);
-      console.log("הוחלף טקסט בשדה קלט");
+      // console.log("הוחלף טקסט בשדה קלט");
     } else if (isEditable) {
       replaceTextInEditableElement(convertedText);
-      console.log("הוחלף טקסט באלמנט עריכה");
+      // console.log("הוחלף טקסט באלמנט עריכה");
     } else {
-      // החלפת טקסט רגיל בדף
       const range = selection.getRangeAt(0);
       range.deleteContents();
       range.insertNode(document.createTextNode(convertedText));
-      console.log("הוחלף טקסט רגיל בדף");
+      // console.log("הוחלף טקסט רגיל בדף");
     }
   } catch (error) {
-    console.error("שגיאה בהחלפת הטקסט:", error);
+    // console.error("שגיאה בהחלפת הטקסט:", error);
   }
 }
 
 // האזנה להודעות מ-background script
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  console.log("התקבלה הודעה:", message);
+  // console.log("התקבלה הודעה:", message);
   
   if (message.action === "convertText") {
     replaceSelectedText();
     
-    // שליחת אישור קבלה
     if (sendResponse) {
       sendResponse({ status: "success" });
     }
-    return true; // חשוב להחזיר true כדי לאפשר תקשורת אסינכרונית
+    return true;
   }
 });
 
 // האזנה לקיצור מקלדת ישירות בדף
 document.addEventListener('keydown', (event) => {
-  // בדיקה אם הקיצור הוא Ctrl+Shift+Y או Command+Shift+Y
   if ((event.ctrlKey || event.metaKey) && event.shiftKey && (event.key === 'Y' || event.key === 'y')) {
-    console.log("זוהה קיצור מקלדת Ctrl+Shift+Y");
+    // console.log("זוהה קיצור מקלדת Ctrl+Shift+Y");
     replaceSelectedText();
     event.preventDefault();
   }
 });
 
-// הודעת אתחול
-console.log("תוסף ataAlAnglit נטען בהצלחה"); 
+// console.log("תוסף ataAlAnglit נטען בהצלחה"); 
