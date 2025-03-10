@@ -1,0 +1,13 @@
+# קבצי מערכת
+.DS_Store
+Thumbs.db
+
+# קבצי עורכי קוד
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# קבצים זמניים
+*.log
+*.tmp 

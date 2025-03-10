@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <!-- Background -->
+  <rect width="128" height="128" rx="16" fill="#4a86e8"/>
+  
+  <!-- Letters RBM -->
+  <text x="64" y="76" font-family="Arial, sans-serif" font-size="42" font-weight="bold" text-anchor="middle" fill="white">ATA</text>
+</svg>
